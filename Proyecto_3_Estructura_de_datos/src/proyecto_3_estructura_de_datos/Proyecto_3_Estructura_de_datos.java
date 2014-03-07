@@ -217,7 +217,7 @@ public class Proyecto_3_Estructura_de_datos {
      
      
      int h=fact(f.length);
-        System.out.println("h="+h);
+      
      ArrayList<int[]>list;
      list=new ArrayList();
    //  list.add(f);
@@ -295,19 +295,10 @@ public class Proyecto_3_Estructura_de_datos {
                
              }
              fila++;
-           }//fin del if
-            /*
-                System.out.println(bool.contains(true));
-                System.out.println("contenido de bool");
-                System.out.println("");
-                for (int j = 0; j < bool.size(); j++) {
-                    System.out.println(bool.get(j));
-                }
-                    */
-            
-            }//fin del while de validacion                
-                               
-      }//fin del for principal
+           }
+       }
+       }//fin del for principal
+     
       double min = 10000;
       int ele =-1;
      double costos[][]=new double[26][26]; 
