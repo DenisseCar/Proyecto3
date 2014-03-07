@@ -319,8 +319,8 @@ public class Proyecto_3_Estructura_de_datos {
      for(int i=0;i<h;i++){
      verti.add(0,ar2.indexOf(ar.get(0)));
      
-     for(int r=0;r<f.length;r++){
-       camino(verti.get(r),mat[i][r],p); 
+     for(int r=0;r<f.length;r++){///////////////////////////////////////////////////////////////////////////////////
+       camino2(verti.get(r),mat[i][r],p); 
        verti.add(mat[i][r]);
      }
       if(mat.length>0){
@@ -329,7 +329,10 @@ public class Proyecto_3_Estructura_de_datos {
       }
       double costo=0;
       for(int j=0;j<verti.size()-2;j++){
-        costo+= mati[(int)verti.get(j)][(int)verti.get(j+1)];
+        costo+= matrix[(int)verti.get(j)][(int)verti.get(j+1)];
+        if(costo==5000){
+          costo+=100000;
+        }
       }
      
      for(int t=0;t<verti.size()-1;t++){
@@ -376,9 +379,17 @@ public class Proyecto_3_Estructura_de_datos {
         int k= p[i][j];
         if(k==-2 || k==-1){
         }else{  
-            verti.add(k);
-            camino(k, j, p);
-            
+         camino(i, k, p);
+         verti.add(k);
+        }
+    }
+    
+    public static void camino2(int i,int j, int[][] p){
+        int k= p[i][j];
+        if(k==-2 || k==-1){
+        }else{  
+         verti.add(k);
+         camino(i, k, p);
         }
     }
     static int[] shuffle(int[] a)
