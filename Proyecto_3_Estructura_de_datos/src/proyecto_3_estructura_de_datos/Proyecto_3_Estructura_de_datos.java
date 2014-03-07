@@ -143,7 +143,13 @@ public class Proyecto_3_Estructura_de_datos {
             ma[k][i]= matrix[k][i]; 
         } 
      }
-         
+      double[][] mati = new double[matrix.length][matrix.length];
+     for(int k=0;k<matrix.length;k++){
+        for(int i=0;i<matrix.length;i++){
+            mati[k][i]= matrix[k][i]; 
+        } 
+     }
+           
      //Floyd para matrix, que es la matriz de precios  hbhybhyswd
      for(int k=0;k<matrix.length;k++){
         for(int i=0;i<matrix.length;i++){
@@ -176,6 +182,7 @@ public class Proyecto_3_Estructura_de_datos {
             }//fin del for
        }//fin del for
      }
+     
      
      System.out.println("");
      System.out.println("");
@@ -316,12 +323,13 @@ public class Proyecto_3_Estructura_de_datos {
        camino(verti.get(r),mat[i][r],p); 
        verti.add(mat[i][r]);
      }
-      if(mat.length>1){
+      if(mat.length>0){
       verti.add(mat[i][mat.length-1]);
+          
       }
       double costo=0;
       for(int j=0;j<verti.size()-2;j++){
-        costo+= matrix[(int)verti.get(j)][(int)verti.get(j+1)];
+        costo+= mati[(int)verti.get(j)][(int)verti.get(j+1)];
       }
      
      for(int t=0;t<verti.size()-1;t++){
@@ -334,20 +342,33 @@ public class Proyecto_3_Estructura_de_datos {
      }
      verti.clear();
      }
-     
+     double cost =0;
+     int ultima =-1;
      for(int i=0;i<costos.length;i++){
-         if(costos[ele][i]!=-2.0){
+          if(costos[ele][i]!=-2.0){
          if(costos[ele][i]<=25.0){
-          System.out.print(ar2.get((int)costos[ele][i])+"->");   
+          System.out.print(ar2.get((int)costos[ele][i])+"->");
+            ultima =(int) costos[ele][i];
          }else{
-             System.out.println(costos[ele][i]);
+              
+             cost = costos[ele][i];
          }
          }
      }
-    
      
+      verti.add(ultima);
+     camino(ultima,ar2.indexOf(ar.get(0)),p);
+     verti.add(ar2.indexOf(ar.get(0)));
+       
+     for(int j=0;j<verti.size()-1;j++){
+       cost+= matrix[(int)verti.get(j)][(int)verti.get(j+1)];
+    }
+     for(int j=1;j<verti.size();j++){
+         System.out.print(ar2.get(verti.get(j))+"->");
+     }
      
-      
+        System.out.println(" "+cost);
+     
      
     }//fin del main
     
