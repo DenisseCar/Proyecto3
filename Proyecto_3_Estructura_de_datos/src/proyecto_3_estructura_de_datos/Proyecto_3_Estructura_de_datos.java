@@ -134,18 +134,6 @@ public class Proyecto_3_Estructura_de_datos {
           Pair<String> endpoints = g.getEndpoints(((avion)(edge[i])));
           matrix[ar2.indexOf(endpoints.getFirst())][ar2.indexOf(endpoints.getSecond())]=((avion)(edge[i])).precio;
       }//fin del for
-      
-      System.out.println("");
-       for (int i = 0; i < ar2.size(); i++) {
-        System.out.print("\t"+ar2.get(i)+"\t");
-      }
-      for(int i=0;i<matrix.length;i++){
-        System.out.println("");
-        System.out.print(ar2.get(i));
-        for(int i2=0;i2<matrix.length;i2++){
-            System.out.print("\t"+(float)matrix[i][i2]+"\t");
-        }//fin del segundo for
-      }//fin del primer 
       System.out.println("");
       
      //floyd y sacar caminos
@@ -165,17 +153,7 @@ public class Proyecto_3_Estructura_de_datos {
                 }//fin del if
             }//fin del for
         }
-     }
-     for (int i = 0; i < ar2.size(); i++) {
-        System.out.print("\t"+ar2.get(i)+"\t");
-      }
-      for(int i=0;i<matrix.length;i++){
-        System.out.println("");
-        System.out.print(ar2.get(i));
-        for(int i2=0;i2<matrix.length;i2++){
-            System.out.print("\t"+(float)matrix[i][i2]+"\t");
-        }//fin del segundo for
-      }//fin del primer 
+     } 
      //Utilizar la matriz p, para encontrar camino mas corto, si no hay camino lo inicializa en -1, en otro caso lo pone en -2
      int [][] p=new int[matrix.length][matrix.length];
      for(int i=0;i<matrix.length;i++){
@@ -249,7 +227,8 @@ public class Proyecto_3_Estructura_de_datos {
    //  list.add(f);
      int[] y=new int[f.length];
       boolean k=true;
-      int[][] mat=new int[f.length][h];
+      int[][] mat=new int[h][f.length];
+      
       for(int i=0;i<h;i++){
           for(int i2=0;i2<f.length;i2++){
            mat[i][i2]=0;
@@ -257,35 +236,81 @@ public class Proyecto_3_Estructura_de_datos {
       }//fin del for
       int fila=0;
       int cont=0;
+      ArrayList<Boolean>bool;
+      bool=new ArrayList();
       for(int i=0;i<h;i++){
             y=shuffle(f);
+            if(i==0){
            for(int i2=0;i2<f.length;i2++){
-               mat[fila][i2]=y[i2];
+               mat[0][i2]=y[i2];
            }//fin del for
+            }//fin del if
             for(int i2=0;i2<h;i2++){
                 for(int i3=0;i3<f.length;i3++){
-                    if(mat[i2][i3]!=y[i3]){
-                       k=false;///errror
+                    if(mat[i2][i3]==y[i3]){
+                       cont++;///errror
                     }//fin del if
+                    
                 }//fin del segundo for
+                if(cont==f.length-1){
+                        bool.add(true);
+                    }//fin del if
+                    else{
+                        bool.add(false);
+                    }//fin del else
+                    cont=0;
             }//fin del primer for
             
-            while(k){
-                y=shuffle(f);
-                
            for(int i2=0;i2<f.length;i2++){
                mat[fila][i2]=y[i2];
            }//fin del for
-                for(int i2=0;i2<h;i2++){
+           fila++;
+           if(fila==h){
+               break;
+           }
+            while(bool.contains(true)&&fila+1<h){
+                y=shuffle(f);
+                System.out.println("valores de y en el while");
+                for(int i2=0;i2<y.length;i2++){
+                    System.out.println(y[i2]);
+                }
+                bool.clear();
+          
+            for(int i2=0;i2<h;i2++){
                 for(int i3=0;i3<f.length;i3++){
-                    if(mat[i2][i3]!=y[i3]){
-                       k=false;
+                    if(mat[i2][i3]==y[i3]){
+                       cont++;
                     }//fin del if
+                    
                 }//fin del segundo for
+                
+                System.out.println("valor de cont en  while "+cont);
+                if(cont==f.length-1){
+                        bool.add(true);
+                    }//fin del if
+                    else{
+                        bool.add(false);
+                    }//fin del else
+                    cont=0;
             }//fin del primer for
+            if(bool.contains(true)==false){
+             for(int i2=0;i2<f.length;i2++){
+               mat[fila][i2]=y[i2];
+               
+             }
+             fila++;
+           }//fin del if
+            /*
+                System.out.println(bool.contains(true));
+                System.out.println("contenido de bool");
+                System.out.println("");
+                for (int j = 0; j < bool.size(); j++) {
+                    System.out.println(bool.get(j));
+                }
+                    */
             
             }//fin del while de validacion                
-                    fila++;           
+                               
       }//fin del for principal
       
       
@@ -313,14 +338,15 @@ public class Proyecto_3_Estructura_de_datos {
     }
     static int[] shuffle(int[] a)
   {
-    Random rnd = new Random();
+  
    int n = a.length;
     for (int i = 0; i < n; i++)
     {
         // between i and n-1
         int r = i + (int) (Math.random() * (n-i));
-        int tmp = a[i];    // swap
-        a[i] = a[r];
+         int r2 = i + (int) (Math.random() * (n-i));
+        int tmp = a[r2];    // swap
+        a[r2] = a[r];
         a[r] = tmp;
     }
     return a;
