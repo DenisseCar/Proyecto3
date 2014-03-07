@@ -134,6 +134,7 @@ public class Proyecto_3_Estructura_de_datos {
           Pair<String> endpoints = g.getEndpoints(((avion)(edge[i])));
           matrix[ar2.indexOf(endpoints.getFirst())][ar2.indexOf(endpoints.getSecond())]=((avion)(edge[i])).precio;
       }//fin del for
+      
       System.out.println("");
        for (int i = 0; i < ar2.size(); i++) {
         System.out.print("\t"+ar2.get(i)+"\t");
