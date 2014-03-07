@@ -102,7 +102,7 @@ public class Proyecto_3_Estructura_de_datos {
       BasicVisualizationServer<String,avion> vv = 
       new BasicVisualizationServer<String,avion>(l);
       vv.getRenderContext().setVertexLabelTransformer(new ToStringLabeller());
-      //vv.getRenderContext().setEdgeLabelTransformer(new ToStringLabeller());
+      vv.getRenderContext().setEdgeLabelTransformer(new ToStringLabeller());
       vv.getRenderer().getVertexLabelRenderer().setPosition(Position.CNTR); 
       JFrame jf = new JFrame();
       vv.setPreferredSize(new Dimension(350,350));
@@ -176,7 +176,9 @@ public class Proyecto_3_Estructura_de_datos {
             }//fin del for
        }//fin del for
      }
-     
+     String continuar = "s";
+     boolean conti = true;
+     while(conti){
      System.out.println("");
      System.out.println("");
      System.out.println("Lista de cuidades");
@@ -293,16 +295,55 @@ public class Proyecto_3_Estructura_de_datos {
       }//fin del for principal
       
       
+      double min = 10000;
+      int ele =-1;
+     double costos[][]=new double[26][26]; 
+     for(int q=0;q<costos.length;q++){
+     for(int w=0;w<costos.length;w++){
+      costos[q][w]=-2.0;   
+     }
+     }
+     for(int i=0;i<h;i++){
+     verti.add(0,ar2.indexOf(ar.get(0)));
+     
+     for(int r=0;r<f.length;r++){
+       camino(verti.get(r),mat[i][r],p); 
+       verti.add(mat[i][r]);
+     }
+      verti.add(mat[i][mat.length-1]);
+      double costo=0;
+      for(int j=0;j<verti.size()-2;j++){
+        costo+= matrix[(int)verti.get(j)][(int)verti.get(j+1)];
+      }
+     
+     for(int t=0;t<verti.size()-1;t++){
+     costos[i][t] = verti.get(t);
+     }
+     costos[i][verti.size()] = costo;
+     if(costo<min){
+     min = costo;
+     ele=i;
+     }
+     verti.clear();
+     }
+     
+     for(int i=0;i<costos.length;i++){
+         if(costos[ele][i]!=-2.0){
+         if(costos[ele][i]<=25.0){
+          System.out.print(ar2.get((int)costos[ele][i])+"->");   
+         }else{
+             System.out.println(costos[ele][i]);
+         }
+         }
+     }
+         System.out.println("Desea conocer otra ruta?[s/n]");
+         continuar = s.next();
+         if(continuar!="s" && continuar !="S"){
+          conti=false;
+          System.exit(0);
+         }
+     }
       
-      System.out.println("Impresion de las combinaciones");
-      for(int i=0;i<h;i++){
-          System.out.print(i+".- ");
-          for(int i2=0;i2<f.length;i2++){
-                System.out.print(mat[i][i2]+" ");
-          }
-          System.out.println("");
-          System.out.println("");
-     }//fin del for
     
     }//fin del main
     
@@ -323,7 +364,7 @@ public class Proyecto_3_Estructura_de_datos {
     {
         // between i and n-1
         int r = i + (int) (Math.random() * (n-i));
-         int r2 = i + (int) (Math.random() * (n-i));
+        int r2 = i + (int) (Math.random() * (n-i));
         int tmp = a[r2];    // swap
         a[r2] = a[r];
         a[r] = tmp;
@@ -337,12 +378,11 @@ public class Proyecto_3_Estructura_de_datos {
     public static int fact(int n)
     {
         int result;
+        if(n==1)
+            return 1;
 
-       if(n==1)
-         return 1;
-
-       result = fact(n-1) * n;
-       return result;
+        result = fact(n-1) * n;
+        return result;
     }//fin del metodo
 }//fin de la clase
 
