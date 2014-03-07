@@ -176,20 +176,8 @@ public class Proyecto_3_Estructura_de_datos {
             }//fin del for
        }//fin del for
      }
-     //imprimir p
+     
      System.out.println("");
-     System.out.println("");
-     System.out.print("\t");
-     for(int i=0;i<matrix.length;i++)
-        System.out.print((i)+"\t");
-     System.out.println("");
-     for(int i=0;i<matrix.length;i++){
-        System.out.print((i)+"\t");
-        for(int i2=0;i2<matrix.length;i2++){
-            System.out.print(p[i][i2]+"\t");
-        }
-        System.out.println("");
-     }
      System.out.println("");
      System.out.println("Lista de cuidades");
       for(int i=0;i<vertex.length;i++){
@@ -200,38 +188,33 @@ public class Proyecto_3_Estructura_de_datos {
       String temp="";
       while(d!='s'){
         System.out.println("Ingrese la cuidad");
-       
         temp=s.next().toUpperCase();
-         if(ar.contains(temp)){
-             System.out.println("La cuidad ya habia sido agregada anteriormente y no se agregara");
+        if(ar.contains(temp)){
+            System.out.println("La cuidad ya habia sido agregada anteriormente y no se agregara");
         }
-         else{
-             ar.add(temp);
-         }
+        else{
+            ar.add(temp);
+        }
         System.out.println("Salir s/n");
         d=s.next().toLowerCase().charAt(0);
       }
-     int f[]= new int[ar.size()];
-     for(int i=0;i<ar.size();i++){
+      int f[]= new int[ar.size()];
+      for(int i=0;i<ar.size();i++){
         f[i]=ar2.indexOf(ar.get(i));
-     }
+      }
      
-     
-     
-     
-     
-     int h=fact(f.length);
-        System.out.println("h="+h);
-     ArrayList<int[]>list;
-     list=new ArrayList();
-   //  list.add(f);
-     int[] y=new int[f.length];
+      int h=fact(f.length);
+      System.out.println("h="+h);
+      ArrayList<int[]>list;
+      list=new ArrayList();
+      //  list.add(f);
+      int[] y=new int[f.length];
       boolean k=true;
       int[][] mat=new int[h][f.length];
       
       for(int i=0;i<h;i++){
           for(int i2=0;i2<f.length;i2++){
-           mat[i][i2]=0;
+            mat[i][i2]=0;
           }//fin del segundo for
       }//fin del for
       int fila=0;
@@ -239,67 +222,63 @@ public class Proyecto_3_Estructura_de_datos {
       ArrayList<Boolean>bool;
       bool=new ArrayList();
       for(int i=0;i<h;i++){
-            y=shuffle(f);
-            if(i==0){
-           for(int i2=0;i2<f.length;i2++){
+        y=shuffle(f);
+        if(i==0){
+            for(int i2=0;i2<f.length;i2++){
                mat[0][i2]=y[i2];
-           }//fin del for
+            }//fin del for
+        }//fin del if
+        for(int i2=0;i2<h;i2++){
+            for(int i3=0;i3<f.length;i3++){
+                if(mat[i2][i3]==y[i3]){
+                    cont++;///errror
+                }//fin del if
+            }//fin del segundo for
+            if(cont==f.length-1){
+                bool.add(true);
             }//fin del if
-            for(int i2=0;i2<h;i2++){
-                for(int i3=0;i3<f.length;i3++){
-                    if(mat[i2][i3]==y[i3]){
-                       cont++;///errror
-                    }//fin del if
-                    
-                }//fin del segundo for
-                if(cont==f.length-1){
-                        bool.add(true);
-                    }//fin del if
-                    else{
-                        bool.add(false);
-                    }//fin del else
-                    cont=0;
-            }//fin del primer for
-            
-           for(int i2=0;i2<f.length;i2++){
-               mat[fila][i2]=y[i2];
-           }//fin del for
-           fila++;
-           if(fila==h){
-               break;
-           }
-            while(bool.contains(true)&&fila+1<h){
-                y=shuffle(f);
-                System.out.println("valores de y en el while");
-                for(int i2=0;i2<y.length;i2++){
-                    System.out.println(y[i2]);
-                }
-                bool.clear();
-          
+            else{
+                bool.add(false);
+            }//fin del else
+            cont=0;
+        }//fin del primer for
+        for(int i2=0;i2<f.length;i2++){
+            mat[fila][i2]=y[i2];
+        }//fin del for
+        fila++;
+        if(fila==h){
+         break;
+        }
+        while(bool.contains(true)&&fila+1<h){
+            y=shuffle(f);
+            System.out.println("valores de y en el while");
+            for(int i2=0;i2<y.length;i2++){
+                System.out.println(y[i2]);
+            }
+            bool.clear();
             for(int i2=0;i2<h;i2++){
                 for(int i3=0;i3<f.length;i3++){
                     if(mat[i2][i3]==y[i3]){
                        cont++;
                     }//fin del if
                     
-                }//fin del segundo for
-                
-                System.out.println("valor de cont en  while "+cont);
-                if(cont==f.length-1){
-                        bool.add(true);
-                    }//fin del if
-                    else{
-                        bool.add(false);
-                    }//fin del else
-                    cont=0;
-            }//fin del primer for
-            if(bool.contains(true)==false){
-             for(int i2=0;i2<f.length;i2++){
-               mat[fila][i2]=y[i2];
+               }//fin del segundo for
+               System.out.println("valor de cont en  while "+cont);
+               if(cont==f.length-1){
+                bool.add(true);
+               }//fin del if
+               else{
+                bool.add(false);
+               }//fin del else
+               cont=0;
+          }//fin del primer for
+          if(bool.contains(true)==false){
+          for(int i2=0;i2<f.length;i2++){
+             mat[fila][i2]=y[i2];
                
-             }
+          }
              fila++;
-           }//fin del if
+          }//fin del if
             /*
                 System.out.println(bool.contains(true));
                 System.out.println("contenido de bool");
@@ -315,15 +294,15 @@ public class Proyecto_3_Estructura_de_datos {
       
       
       
-        System.out.println("Impresion de las combinaciones");
-            for(int i=0;i<h;i++){
-                System.out.print(i+".- ");
-                for(int i2=0;i2<f.length;i2++){
-                    System.out.print(mat[i][i2]+" ");
-                }
-                System.out.println("");
-                System.out.println("");
-            }//fin del for
+      System.out.println("Impresion de las combinaciones");
+      for(int i=0;i<h;i++){
+          System.out.print(i+".- ");
+          for(int i2=0;i2<f.length;i2++){
+                System.out.print(mat[i][i2]+" ");
+          }
+          System.out.println("");
+          System.out.println("");
+     }//fin del for
     
     }//fin del main
     
