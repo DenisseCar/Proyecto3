@@ -39,11 +39,11 @@ public class Proyecto_3_Estructura_de_datos {
     
       public static  ArrayList<Integer>verti;
         
-    public static void main(String[] args) {
+      public static void main(String[] args) {
       verti=new ArrayList();
       
       DirectedSparseMultigraph<String, avion> g=new DirectedSparseMultigraph<String, avion>();
-         
+      //Crea las aristas del grafo   
       g.addEdge(new avion("American",706.30), "TGU", "MIA");
       g.addEdge(new avion("Taca",706.30), "TGU", "CUN");
       g.addEdge(new avion("Delta",557.81), "ATL", "JFK");
@@ -117,11 +117,11 @@ public class Proyecto_3_Estructura_de_datos {
       Object[] edge = edges.toArray();//introduce los precios en edge
       Collection<String> vertices = g.getVertices();
       Object[] vertex = vertices.toArray();//los vertices del grafo
-      
+      //Matriz de precios
       double matrix[][]=new double[vertex.length][vertex.length];
       ArrayList<String> ar2=new ArrayList();
       for(int i=0;i<vertex.length;i++){
-        ar2.add((String)vertex[i]);
+        ar2.add((String)vertex[i]);//Introduce los nombres de los vertices
       }
       //inicializa con 5000 los precios
       for(int i=0;i<matrix.length;i++){
@@ -130,6 +130,7 @@ public class Proyecto_3_Estructura_de_datos {
         }//fin del segundo for
       }//fin del primer 
       //introduce los precios de las ciudades
+      //Si no hubiera camino directo lo dejara con 5000
       for(int i=0;i<edges.size();i++){
           Pair<String> endpoints = g.getEndpoints(((avion)(edge[i])));
           matrix[ar2.indexOf(endpoints.getFirst())][ar2.indexOf(endpoints.getSecond())]=((avion)(edge[i])).precio;
@@ -143,14 +144,7 @@ public class Proyecto_3_Estructura_de_datos {
             ma[k][i]= matrix[k][i]; 
         } 
      }
-      double[][] mati = new double[matrix.length][matrix.length];
-     for(int k=0;k<matrix.length;k++){
-        for(int i=0;i<matrix.length;i++){
-            mati[k][i]= matrix[k][i]; 
-        } 
-     }
-           
-     //Floyd para matrix, que es la matriz de precios  hbhybhyswd
+     //Floyd para matrix, que es la matriz de precios, lo que hace basicamente es buscar el camino mas corto de todos los vertices hacia todos
      for(int k=0;k<matrix.length;k++){
         for(int i=0;i<matrix.length;i++){
             for(int j=0;j<matrix.length;j++){
@@ -161,6 +155,7 @@ public class Proyecto_3_Estructura_de_datos {
         }
      } 
      //Utilizar la matriz p, para encontrar camino mas corto, si no hay camino lo inicializa en -1, en otro caso lo pone en -2
+    
      int [][] p=new int[matrix.length][matrix.length];
      for(int i=0;i<matrix.length;i++){
         for(int i2=0;i2<matrix.length;i2++){
@@ -171,7 +166,8 @@ public class Proyecto_3_Estructura_de_datos {
             }
         }
      }
-     //floy para ma, y tambien los caminos para p
+     //floyd para ma, y tambien los caminos para p, utilizamos ma para que no se vea afectada la matrix
+     //lo que introduce es el ultimo vertice al que accesar para el camino mas corto
      for(int k=0;k<matrix.length;k++){
         for(int i=0;i<matrix.length;i++){
             for(int j=0;j<matrix.length;j++){
@@ -183,59 +179,53 @@ public class Proyecto_3_Estructura_de_datos {
        }//fin del for
      }
      
-     
+     //Pide al usuario que introduzca las ciudades que desea visitar
      System.out.println("");
      System.out.println("");
      System.out.println("Lista de cuidades");
       for(int i=0;i<vertex.length;i++){
          System.out.println(vertex[i]);
       }//fin del for
-    
+      //El usaurio podra ingresar la cantidad de ciudades que desee siempre y cuando se encuentren en la lista
+      //de los vertices y que ingresa mas de una ciudad no podra ingrear una misma ciudad dos veces
       char d='o';
       Scanner s=new Scanner(System.in);
       String temp="";
       while(d!='s'){
         System.out.println("Ingrese la cuidad");
-       
-         temp=s.next().toUpperCase();
-         if(ar.contains(temp)){
+        temp=s.next().toUpperCase();
+        if(ar.contains(temp)){
              System.out.println("La cuidad ya habia sido agregada anteriormente y no se agregara");
         }else if(!ar2.contains(temp)){
              System.out.println("La ciudad ingresada no se encuentra en la lista de opciones");
         }
-         else{
+        else{
              ar.add(temp);
-         }
+        }
         System.out.println("Salir s/n");
         d=s.next().toLowerCase().charAt(0);
         if(d=='S' || d=='s'){
-         if(ar.size()<2){
-             System.out.println("Debe ingresar al menos una ciudad mas");
-             d='n';
-         }   
+            if(ar.size()<2){
+                System.out.println("Debe ingresar al menos una ciudad mas");
+                d='n';
+            }   
         }
-      }
-     
+     }
+     //Creamos el arreglo f, para ingresar el indexof del arreglo ciudades ar2 conrespecto a las ciudades que ingreso el usario
+     //No se ingresa la primera ya que es la ciudad de origen
      int f[]= new int[ar.size()-1];
      for(int i=0;i<f.length;i++){
         f[i]=ar2.indexOf(ar.get(i+1));
      }
-     
-     
-     
-     
-     
-     
+    
      int h=fact(f.length);
-      
      ArrayList<int[]>list;
      list=new ArrayList();
-   //  list.add(f);
+
      int[] y=new int[f.length];
-      boolean k=true;
-      int[][] mat=new int[h][f.length];
-      
-      for(int i=0;i<h;i++){
+     boolean k=true;
+     int[][] mat=new int[h][f.length];
+     for(int i=0;i<h;i++){
           for(int i2=0;i2<f.length;i2++){
            mat[i][i2]=0;
           }//fin del segundo for
@@ -309,24 +299,28 @@ public class Proyecto_3_Estructura_de_datos {
        }
        }//fin del for principal
      
-      double min = 10000;
-      int ele =-1;
-     double costos[][]=new double[26][26]; 
+      //En adelante, se trabaja con las combinaciones que tenemos, para encontrar la mas comada y que haya camino para todos sus vertices
+     double min = 100000;//Es una variable que indica el costo minimo
+     int ele =-1;//indicara la fila elegida en la mat, es decir la combinacion final
+     double costos[][]=new double[26][26]; //para guardar los costos y los vertices
      for(int q=0;q<costos.length;q++){
      for(int w=0;w<costos.length;w++){
       costos[q][w]=-2.0;   
      }
      }
      for(int i=0;i<h;i++){
-     verti.add(0,ar2.indexOf(ar.get(0)));
-     
+     verti.add(0,ar2.indexOf(ar.get(0)));//introduce el vertice de origen a la lista de ciudades por recorrer
+     //Lo que hace es mandar a llamar al metodo que nos dara el camino entre un vertice que tenemos a otro \, es decir los vertices de po
+     //medio si es que hay
      for(int r=0;r<f.length;r++){///////////////////////////////////////////////////////////////////////////////////
        camino2(verti.get(r),mat[i][r],p); 
        verti.add(mat[i][r]);
      }
+     //Introduce el vertice final
       if(mat.length>0){
       verti.add(mat[i][mat.length-1]);
       }
+      //Con los vertices que sabemos que hay que pasar, almacena el costo 
       double costo=0;
       for(int j=0;j<verti.size()-2;j++){
         costo+= matrix[(int)verti.get(j)][(int)verti.get(j+1)];
@@ -334,43 +328,45 @@ public class Proyecto_3_Estructura_de_datos {
           costo+=100000;
         }
       }
-     
+     //Introduce el costo a la matriz costos que contienen la linea de vertices y al final el costo
      for(int t=0;t<verti.size()-1;t++){
      costos[i][t] = verti.get(t);
      }
      costos[i][verti.size()] = costo;
+     //Si el costo es minimo, ira cambiando 
      if(costo<min){
      min = costo;
      ele=i;
      }
+     //limpiar el la lista de vertices para iniciar con otra combinacion
      verti.clear();
      }
+     //Lo que haremos es buscar el camino de regreso
      double cost =0;
      int ultima =-1;
      for(int i=0;i<costos.length;i++){
-          if(costos[ele][i]!=-2.0){
-         if(costos[ele][i]<=25.0){
-          System.out.print(ar2.get((int)costos[ele][i])+"->");
+         if(costos[ele][i]!=-2.0){
+            if(costos[ele][i]<=25.0){
+            System.out.print(ar2.get((int)costos[ele][i])+"->");
             ultima =(int) costos[ele][i];
          }else{
-              
              cost = costos[ele][i];
          }
          }
      }
      
-      verti.add(ultima);
+     verti.add(ultima);
      camino(ultima,ar2.indexOf(ar.get(0)),p);
      verti.add(ar2.indexOf(ar.get(0)));
-       
+     //Alamacenara los costos  
      for(int j=0;j<verti.size()-1;j++){
        cost+= matrix[(int)verti.get(j)][(int)verti.get(j+1)];
-    }
+     }
+     //Imprime el camino 
      for(int j=1;j<verti.size();j++){
          System.out.print(ar2.get(verti.get(j))+"->");
      }
-     
-        System.out.println(" "+cost);
+     System.out.println(" "+cost);//Imprime el costo total
      
      
     }//fin del main
