@@ -218,41 +218,39 @@ public class Proyecto_3_Estructura_de_datos {
         f[i]=ar2.indexOf(ar.get(i+1));
      }
     
-     int h=fact(f.length);
-     ArrayList<int[]>list;
-     list=new ArrayList();
-
-     int[] y=new int[f.length];
-     boolean k=true;
-     int[][] mat=new int[h][f.length];
-     for(int i=0;i<h;i++){
+     int h=fact(f.length);//calcula el maximo de permutaciones
+      
+     int[] y=new int[f.length];//arreglo donde se guardaran  las permutaciones de f, se guardaran una a la vez
+      int[][] mat=new int[h][f.length];//en esta matriz se almacenaran todas las permutaciones de f
+      
+      for(int i=0;i<h;i++){//se inicializa la matriz con 0
           for(int i2=0;i2<f.length;i2++){
            mat[i][i2]=0;
           }//fin del segundo for
       }//fin del for
-      int fila=0;
-      int cont=0;
-      ArrayList<Boolean>bool;
+      int fila=0;//entero para indicar en que fila de la matriz se va a meter la permutacion
+      int cont=0;//enteroque serivira para validar q no se repitan permutaciones
+      ArrayList<Boolean>bool;//array que servira para validar que no se repitan permutaciones
       bool=new ArrayList();
-      for(int i=0;i<h;i++){
-            y=shuffle(f);
-            if(i==0){
+      for(int i=0;i<h;i++){//el comienzo del for principal 
+            y=shuffle(f);//devuelve un arreglo reordenado aleatoriamente
+            if(i==0){//si i es == a 0 mete y en la primera fila de la matriz
            for(int i2=0;i2<f.length;i2++){
                mat[0][i2]=y[i2];
            }//fin del for
             }//fin del if
-            for(int i2=0;i2<h;i2++){
+            for(int i2=0;i2<h;i2++){//for de validacion que y no este en la matriz
                 for(int i3=0;i3<f.length;i3++){
                     if(mat[i2][i3]==y[i3]){
-                       cont++;///errror
+                       cont++;//por cada cada elemento de y igual a un elemento de la fila de mat en la que se esta en el momento se aumenta por uno
                     }//fin del if
                     
                 }//fin del segundo for
-                if(cont==f.length-1){
-                        bool.add(true);
+                if(cont==f.length-1){//si es igual a al tamaño de f significa que todos los elementos de y fueron iguales a una fila especifica de mat
+                        bool.add(true);//se le agrega un true a bool para indicar de que ya existe una combinacion
                     }//fin del if
                     else{
-                        bool.add(false);
+                        bool.add(false);//significa que no existe esa combiancion de y
                     }//fin del else
                     cont=0;
             }//fin del primer for
@@ -261,35 +259,30 @@ public class Proyecto_3_Estructura_de_datos {
                mat[fila][i2]=y[i2];
            }//fin del for
            fila++;
-           if(fila==h){
+           if(fila==h){//si la fila por la cual se esta es igual al numero de maximo de permutaciones se sale del ciclo
                break;
            }
-            while(bool.contains(true)&&fila+1<h){
-                y=shuffle(f);
-                System.out.println("valores de y en el while");
-                for(int i2=0;i2<y.length;i2++){
-                    System.out.println(y[i2]);
-                }
+            while(bool.contains(true)&&fila+1<h){//por si sale repetido y
+                y=shuffle(f);//vuelve a reordenar y
                 bool.clear();
           
             for(int i2=0;i2<h;i2++){
                 for(int i3=0;i3<f.length;i3++){
                     if(mat[i2][i3]==y[i3]){
-                       cont++;
+                       cont++;//verifica que y no este repetido
                     }//fin del if
                     
                 }//fin del segundo for
                 
-                System.out.println("valor de cont en  while "+cont);
-                if(cont==f.length-1){
-                        bool.add(true);
+                if(cont==f.length-1){//si es igual a al tamaño de f significa que todos los elementos de y fueron iguales a una fila especifica de mat
+                        bool.add(true);//se le agrega un true a bool para indicar de que ya existe una combinacion
                     }//fin del if
                     else{
-                        bool.add(false);
+                        bool.add(false);//significa que no existe esa combiancion de y
                     }//fin del else
                     cont=0;
             }//fin del primer for
-            if(bool.contains(true)==false){
+            if(bool.contains(true)==false){//agrega la permutacion si no ha salido toavia
              for(int i2=0;i2<f.length;i2++){
                mat[fila][i2]=y[i2];
                
@@ -409,7 +402,7 @@ public class Proyecto_3_Estructura_de_datos {
     
     public static int fact(int n)
     {
-        int result;
+       int result;
        if(n==0)
         return 1;   
        
