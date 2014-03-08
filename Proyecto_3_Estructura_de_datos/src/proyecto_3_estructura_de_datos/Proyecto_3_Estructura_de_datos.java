@@ -197,20 +197,30 @@ public class Proyecto_3_Estructura_de_datos {
       while(d!='s'){
         System.out.println("Ingrese la cuidad");
        
-        temp=s.next().toUpperCase();
+         temp=s.next().toUpperCase();
          if(ar.contains(temp)){
              System.out.println("La cuidad ya habia sido agregada anteriormente y no se agregara");
+        }else if(!ar2.contains(temp)){
+             System.out.println("La ciudad ingresada no se encuentra en la lista de opciones");
         }
          else{
              ar.add(temp);
          }
         System.out.println("Salir s/n");
         d=s.next().toLowerCase().charAt(0);
+        if(d=='S' || d=='s'){
+         if(ar.size()<2){
+             System.out.println("Debe ingresar al menos una ciudad mas");
+             d='n';
+         }   
+        }
       }
+     
      int f[]= new int[ar.size()-1];
      for(int i=0;i<f.length;i++){
         f[i]=ar2.indexOf(ar.get(i+1));
      }
+     
      
      
      
@@ -316,7 +326,6 @@ public class Proyecto_3_Estructura_de_datos {
      }
       if(mat.length>0){
       verti.add(mat[i][mat.length-1]);
-          
       }
       double costo=0;
       for(int j=0;j<verti.size()-2;j++){
